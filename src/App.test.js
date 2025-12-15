@@ -1,19 +1,13 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import App from "./App";
 
-test("renders users fetched from API", async () => {
-  global.fetch = () =>
-    Promise.resolve({
-      ok: true,
-      json: () =>
-        Promise.resolve([{ id: 1, name: "John Doe", email: "john@test.com" }]),
-    });
+jest.mock("./components/UserList/UserList", () => () => (
+  <div>UserList Component</div>
+));
 
-  render(<App />);
-
-  expect(screen.getByText(/loading users/i)).toBeInTheDocument();
-
-  await waitFor(() => {
-    expect(screen.getByText("John Doe - john@test.com")).toBeInTheDocument();
+describe("App", () => {
+  test("renders App component", () => {
+    render(<App />);
+    expect(screen.getByText(/UserList Component/i)).toBeInTheDocument();
   });
 });

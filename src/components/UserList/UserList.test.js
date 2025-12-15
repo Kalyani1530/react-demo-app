@@ -16,7 +16,7 @@ describe("UserList", () => {
   });
 
   test("shows error on failure", async () => {
-    getRequest.mockRejectedValue();
+    getRequest.mockRejectedValue(new Error("API error"));
 
     render(<UserList />);
 
